@@ -1,0 +1,54 @@
+{
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "accuracy": 1.0,
+  "avg_seconds": 2.8,
+  "results": [
+    {
+      "question": "How many orders are in the database?",
+      "passed": true,
+      "seconds": 3.4,
+      "agent_sql": [
+        "SELECT COUNT(*) AS delivered_orders FROM orders WHERE order_status = 'delivered';",
+        "SELECT COUNT(*) AS total_orders FROM orders;"
+      ],
+      "error": null
+    },
+    {
+      "question": "How many orders have the status delivered?",
+      "passed": true,
+      "seconds": 1.3,
+      "agent_sql": [
+        "SELECT COUNT(*) AS delivered_orders FROM orders WHERE order_status = 'delivered';"
+      ],
+      "error": null
+    },
+    {
+      "question": "How many unique customers are there? Use customer_unique_id.",
+      "passed": true,
+      "seconds": 4.0,
+      "agent_sql": [
+        "SELECT COUNT(DISTINCT customer_unique_id) AS unique_customers FROM customers;"
+      ],
+      "error": null
+    },
+    {
+      "question": "How many sellers are there?",
+      "passed": true,
+      "seconds": 2.3,
+      "agent_sql": [
+        "SELECT COUNT(*) AS seller_count FROM sellers;"
+      ],
+      "error": null
+    },
+    {
+      "question": "What is the total revenue from delivered orders, counting item prices only, no freight?",
+      "passed": true,
+      "seconds": 3.0,
+      "agent_sql": [
+        "SELECT SUM(oi.price) AS total_revenue\nFROM order_items oi\nJOIN orders o ON oi.order_id = o.order_id\nWHERE o.order_status = 'delivered';"
+      ],
+      "error": null
+    }
+  ]
+}
